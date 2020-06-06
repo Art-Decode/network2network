@@ -10,5 +10,5 @@
 # Setup
 ```
 $ pipenv install
-$ uvicorn main:app
+$ pipenv run server
 ```
