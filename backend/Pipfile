@@ -13,3 +13,6 @@ tensorflow-gpu = "==1.14.0"
 
 [requires]
 python_version = "3.6"
+
+[scripts]
+server = 'uvicorn main:app --host=0.0.0.0 --port=3141'

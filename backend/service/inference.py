@@ -1,5 +1,5 @@
-import service.dnnlib as dnnlib
-import service.dnnlib.tflib as tflib
+import dnnlib
+import dnnlib.tflib as tflib
 import numpy as np
 import pickle
 from typing import List
