@@ -40,11 +40,11 @@ class ImageService:
 
     async def get_images(self, addresses: List[str], balances: List[float]) -> Dict[str, Image.Image]:
         count = len(addresses)
-        if count < 32:
-            for _ in range(32-count):
+        if count < 10:
+            for _ in range(10-count):
                 addresses.append(addresses[-1])
                 balances.append(balances[-1])
-        if count > 32:
+        if count > 10:
             raise HTTPException(status_code=400, detail="Too many images requested")
 
         raw_images = self.GAN.generate_images(self.addresses_to_latent(addresses), balances)

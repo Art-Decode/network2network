@@ -79,7 +79,7 @@ class StyleGAN2:
     transform = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
 
     def __init__(self, truncation_psi: float = 0.7,
-                 minibatch_size: int = 32,
+                 minibatch_size: int = 10,
                  model_type: 'Model' = Models.ffhq,
                  randomize: bool = False,
                  balance_latent: np.ndarray = np.zeros((18, 512))):
