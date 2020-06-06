@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+fastapi = "*"
+uvicorn = "*"
+pillow = "*"
+tensorflow-gpu = "==1.14.0"
+
+[requires]
+python_version = "3.6"
