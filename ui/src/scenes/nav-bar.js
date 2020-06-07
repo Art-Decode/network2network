@@ -35,7 +35,7 @@ function NavBar({ myAddress, image }) {
           <Grid item>
             <TextField
               onChange={handleChange}
-              placeholder="Search..."
+              placeholder="Address..."
               width={150}
               style={{ marginLeft: 4 }}
             />
@@ -47,13 +47,14 @@ function NavBar({ myAddress, image }) {
           </Grid>
         </Grid>
         {image ? (
-          <React.Fragment>
-            {truncate(myAddress)}
-
-            <Avatar>
-              <img src={`data:image/jpeg;base64,${image}`} />{' '}
-            </Avatar>
-          </React.Fragment>
+          <>
+            <Link to={`account/${myAddress}`}>{truncate(myAddress)}</Link>
+            <Link to={`account/${myAddress}`}>
+              <Avatar>
+                <img src={`data:image/jpeg;base64,${image}`} />{' '}
+              </Avatar>
+            </Link>
+          </>
         ) : (
           <Hourglass size={32} />
         )}
