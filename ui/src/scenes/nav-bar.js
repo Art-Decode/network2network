@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import '../App.css';
-import { AppBar, Toolbar, Button, TextField, Avatar, Hourglass } from 'react95';
-import rei from '../rei.jpg'; // Tell webpack this JS file uses this image
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  TextField,
+  Avatar,
+  Hourglass,
+  LogoIcon,
+} from 'react95';
 import Grid from '@material-ui/core/Grid';
 import { Link } from '@reach/router';
 
-function NavBar({ myAddress }) {
+function NavBar({ myAddress, image }) {
   const [account, setAccount] = useState('');
 
   const handleChange = (e) => setAccount(e.target.value);
-
+  const truncate = (str) => {
+    return str.substr(0, 4) + '... ';
+  };
   return (
     <AppBar>
       <Toolbar>
@@ -19,26 +28,32 @@ function NavBar({ myAddress }) {
           justify="flex-start"
           alignItems="center"
         >
-          <Grid container>
-            <Grid item>
-              <TextField
-                onChange={handleChange}
-                placeholder="Search..."
-                width={150}
-                style={{ marginLeft: 4 }}
-              />
-            </Grid>
-            <Grid item>
-              <Link to={`account/${account}`}>
-                <Button square>🔍</Button>
-              </Link>{' '}
-            </Grid>
+          <Grid item>
+            <Button style={{ fontWeight: 'bold' }}>👾 Start</Button>
+          </Grid>
+          <Grid item></Grid>
+          <Grid item>
+            <TextField
+              onChange={handleChange}
+              placeholder="Search..."
+              width={150}
+              style={{ marginLeft: 4 }}
+            />
+          </Grid>
+          <Grid item>
+            <Link to={`account/${account}`}>
+              <Button square>🔍</Button>
+            </Link>{' '}
           </Grid>
         </Grid>
-        {myAddress ? (
-          <Avatar>
-            <img src={rei} alt="Logo" />{' '}
-          </Avatar>
+        {image ? (
+          <React.Fragment>
+            {truncate(myAddress)}
+
+            <Avatar>
+              <img src={`data:image/jpeg;base64,${image}`} />{' '}
+            </Avatar>
+          </React.Fragment>
         ) : (
           <Hourglass size={32} />
         )}

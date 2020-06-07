@@ -13,7 +13,6 @@ function AccountPage({ address }) {
   const [balance, setBalance] = useState(0);
   const [image, setImage] = useState(null);
 
-  console.log(typeof address, address);
 
   const getImage = () => {
     axios({

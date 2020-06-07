@@ -5,6 +5,7 @@ import AccountPage from './scenes/account';
 import { Keyring } from '@polkadot/api';
 import NavBar from './scenes/nav-bar';
 import { Router } from '@reach/router';
+import axios from 'axios';
 const stringToU8a = require('@polkadot/util/string/toU8a').default;
 
 const generateRandomString = () => {
@@ -14,19 +15,45 @@ const generateRandomString = () => {
   );
 };
 
+var config = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
 function App() {
   const [myAddress, setMyAddress] = useState(null);
+  const [image, setImage] = useState(null);
+
   useEffect(() => {
     const ALICE_SEED = generateRandomString().padEnd(32, ' ');
     const keyring = new Keyring();
     const pairAlice = keyring.addFromSeed(stringToU8a(ALICE_SEED));
     const address = `${keyring.getPair(pairAlice.address).address}`;
     setMyAddress(address);
+
+    const getImage = () => {
+      axios({
+        method: 'post',
+        url: 'http://localhost:3141/kusama',
+        data: {
+          [address]: 0,
+        },
+        config,
+      })
+        .then((r) => {
+          const data = r.data;
+          setImage(data[Object.keys(data)[0]]);
+        })
+        .catch((e) => console.log(e));
+    };
+
+    getImage();
   }, []);
 
   return (
     <React.Fragment>
-      <NavBar myAddress={myAddress}></NavBar>
+      <NavBar myAddress={myAddress} image={image}></NavBar>
       <Router>
         <LandingPage path="/" />
         <AccountPage path="account/:address" />
