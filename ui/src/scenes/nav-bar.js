@@ -7,13 +7,16 @@ import {
   TextField,
   Avatar,
   Hourglass,
-  LogoIcon,
+  List,
+  ListItem,
+  Divider,
 } from 'react95';
 import Grid from '@material-ui/core/Grid';
 import { Link } from '@reach/router';
 
 function NavBar({ myAddress, image }) {
   const [account, setAccount] = useState('');
+  const [open, setOpen] = useState(false);
 
   const handleChange = (e) => setAccount(e.target.value);
   const truncate = (str) => {
@@ -29,7 +32,30 @@ function NavBar({ myAddress, image }) {
           alignItems="center"
         >
           <Grid item>
-            <Button style={{ fontWeight: 'bold' }}>👾 Start</Button>
+            <Button
+              style={{ fontWeight: 'bold' }}
+              onClick={() => setOpen(!open)}
+            >
+              👾 Start
+            </Button>
+            {open && (
+              <List horizontalAlign="left" verticalAlign="bottom">
+                <Link to={`/`}>
+                  <ListItem>👨‍💻 Home</ListItem>
+                </Link>
+
+                <Link to={`account/${myAddress}`}>
+                  <ListItem>📁 My wallet</ListItem>
+                </Link>
+
+                <ListItem>🌐 Change Network</ListItem>
+                <ListItem>💂‍♂️ Validators</ListItem>
+
+                <Divider />
+
+                <ListItem disabled>🔙 Logout</ListItem>
+              </List>
+            )}
           </Grid>
           <Grid item></Grid>
           <Grid item>
