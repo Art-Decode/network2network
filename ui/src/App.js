@@ -1,26 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { ApiPromise, WsProvider } from '@polkadot/api';
+import LandingPage from './scenes/landing-page';
+import AccountPage from './scenes/account';
+import { Keyring } from '@polkadot/api';
+import NavBar from './scenes/nav-bar';
+import { Router } from '@reach/router';
+const stringToU8a = require('@polkadot/util/string/toU8a').default;
+
+const generateRandomString = () => {
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
+};
 
 function App() {
-  const [api, setApi] = useState(null);
-
+  const [myAddress, setMyAddress] = useState(null);
   useEffect(() => {
-    const getApi = async () => {
-      const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
-      const api = await ApiPromise.create({ provider: provider });
-      setApi(api);
-    };
-
-    getApi();
+    const ALICE_SEED = generateRandomString().padEnd(32, ' ');
+    const keyring = new Keyring();
+    const pairAlice = keyring.addFromSeed(stringToU8a(ALICE_SEED));
+    const address = `${keyring.getPair(pairAlice.address).address}`;
+    setMyAddress(address);
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>{api && api.genesisHash.toHex()}</p>
-      </header>
-    </div>
+    <React.Fragment>
+      <NavBar myAddress={myAddress}></NavBar>
+      <Router>
+        <LandingPage path="/" />
+        <AccountPage path="account/:address" />
+      </Router>
+    </React.Fragment>
   );
 }
 

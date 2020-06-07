@@ -2,9 +2,22 @@ import uvicorn
 from typing import Dict
 from fastapi import FastAPI, HTTPException
 from service import ImageService
-
+import sys
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 service_map = {
     'kusama': ImageService(network='kusama'),
     # add more services if memory allows it
@@ -17,7 +30,8 @@ async def root(network: str, body: Dict[str, float]):
     if service:
         addresses = list(body.keys())
         balances = list(body.values())
-        return await service.get_images(addresses, balances)
+        response =await service.get_images(addresses, balances)
+        return response
     else:
         raise HTTPException(status_code=404, detail=f'network "{network}" not found')
 
