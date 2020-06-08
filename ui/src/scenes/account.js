@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { Fieldset, Window, WindowContent } from 'react95';
+import AccountCard from '../components/AccountCard';
+import { Grid } from '@material-ui/core';
 import axios from 'axios';
 var config = {
   headers: {
@@ -12,7 +13,6 @@ var config = {
 function AccountPage({ address }) {
   const [balance, setBalance] = useState(0);
   const [image, setImage] = useState(null);
-
 
   const getImage = () => {
     axios({
@@ -29,6 +29,7 @@ function AccountPage({ address }) {
       })
       .catch((e) => console.log(e));
   };
+
   useEffect(() => {
     const getApi = async () => {
       const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
@@ -44,18 +45,23 @@ function AccountPage({ address }) {
   }, [address]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Window>
-          <WindowContent>
-            <Fieldset>
-              {image && <img src={`data:image/jpeg;base64,${image}`} />}
-              <p>{address}</p>
-              <p>{balance}</p>
-            </Fieldset>
-          </WindowContent>
-        </Window>
-      </header>
+    <div className="App-header">
+      <span style={{ marginTop: '200px' }}>
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="center"
+        >
+          <Grid item>
+            <AccountCard
+              image={image}
+              address={address}
+              balance={balance}
+            ></AccountCard>
+          </Grid>
+        </Grid>
+      </span>
     </div>
   );
 }

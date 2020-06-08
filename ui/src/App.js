@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import LandingPage from './scenes/landing-page';
 import AccountPage from './scenes/account';
+import ValidatorsPage from './scenes/validators';
 import { Keyring } from '@polkadot/api';
 import NavBar from './scenes/nav-bar';
 import { Router } from '@reach/router';
 import axios from 'axios';
+import { getValidators } from './utils/polka';
+
 const stringToU8a = require('@polkadot/util/string/toU8a').default;
 
 const generateRandomString = () => {
@@ -52,13 +55,14 @@ function App() {
   }, []);
 
   return (
-    <React.Fragment>
+    <div className="App">
       <NavBar myAddress={myAddress} image={image}></NavBar>
       <Router>
         <LandingPage path="/" />
         <AccountPage path="account/:address" />
+        <ValidatorsPage validators={getValidators()} path="validators" />
       </Router>
-    </React.Fragment>
+    </div>
   );
 }
 

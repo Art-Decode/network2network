@@ -49,7 +49,9 @@ function NavBar({ myAddress, image }) {
                 </Link>
 
                 <ListItem>🌐 Change Network</ListItem>
-                <ListItem>💂‍♂️ Validators</ListItem>
+                <Link to={`validators`}>
+                  <ListItem>💂‍♂️ Validators</ListItem>
+                </Link>
 
                 <Divider />
 
