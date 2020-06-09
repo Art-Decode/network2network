@@ -41,16 +41,20 @@ function NavBar({ myAddress, image }) {
             {open && (
               <List horizontalAlign="left" verticalAlign="bottom">
                 <Link to={`/`}>
-                  <ListItem>👨‍💻 Home</ListItem>
+                  <ListItem onClick={() => setOpen(!open)}>👨‍💻 Home</ListItem>
                 </Link>
 
                 <Link to={`account/${myAddress}`}>
-                  <ListItem>📁 My wallet</ListItem>
+                  <ListItem onClick={() => setOpen(!open)}>
+                    📁 My wallet
+                  </ListItem>
                 </Link>
 
                 <ListItem>🌐 Change Network</ListItem>
                 <Link to={`validators`}>
-                  <ListItem>💂‍♂️ Validators</ListItem>
+                  <ListItem onClick={() => setOpen(!open)}>
+                    💂‍♂️ Validators
+                  </ListItem>
                 </Link>
 
                 <Divider />
