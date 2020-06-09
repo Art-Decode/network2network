@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import AccountCard from '../components/AccountCard';
+import ValidatorCard from '../components/ValidatorCard';
 import axios from 'axios';
 var config = {
   headers: {
@@ -49,7 +49,7 @@ function AccountPage({ validators }) {
           alt="http://picasion.com/gl/cQ2e/"
         />
         <span>
-          <AccountCard balance={balance}></AccountCard>
+          <ValidatorCard balance={balance}></ValidatorCard>
         </span>
       </div>
     </React.Fragment>
