@@ -14,7 +14,7 @@ const ResetStyles = createGlobalStyle`
   font-weight: normal;
 }
 html {
-  font-size: 19px;
+  font-size: small;
 }
 `;
 

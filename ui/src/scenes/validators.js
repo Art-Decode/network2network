@@ -2,41 +2,32 @@ import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import ValidatorCard from '../components/ValidatorCard';
-import axios from 'axios';
-var config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
+import { getImage } from '../utils/polka'
 
 function AccountPage({ validators }) {
-  const [balance, setBalance] = useState(0);
-  const [images, setImages] = useState([]);
+  const [account, setAccount] = useState(null);
 
-  const getImages = (data) => {
-    axios({
-      method: 'post',
-      url: 'http://localhost:3141/kusama',
-      data: data,
-      config,
-    })
-      .then((r) => {
-        const data = r.data;
-        console.log(data);
-        setImages(data);
-      })
-      .catch((e) => console.log(e));
-  };
+  useEffect(async () => {
+    const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
+    const api = await ApiPromise.create({ provider: provider });
 
-  /*   useEffect(() => {
-    const validatorsShortList = validators.slice(0, 5);
+    console.log(api.derive)
 
-    validatorsShortList.map(async (el) => {
-      const data = {};
-      data[el.address] = el.balance.slice(0, 2);
-      await getImages(data);
+    api.derive.chain.subscribeNewHeads(async (header) => {
+      const account = {
+        address: `${header.author}`
+      }
+      const details = await api.query.system.account(account.address);
+      account.balance = `${details.data.free}`
+
+      const image = await getImage(account.address, account.balance);
+      account.image = image.data[account.address]
+
+      setAccount(
+        account
+      )
     });
-  }, []); */
+  }, []);
 
   return (
     <React.Fragment>
@@ -49,7 +40,7 @@ function AccountPage({ validators }) {
           alt="http://picasion.com/gl/cQ2e/"
         />
         <span>
-          <ValidatorCard balance={balance}></ValidatorCard>
+          <ValidatorCard address={account && account.address} balance={account && account.balance} image={account && account.image}></ValidatorCard>
         </span>
       </div>
     </React.Fragment>

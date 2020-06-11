@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { getImage } from '../utils/polka';
+import axios from 'axios';
 import {
   Table,
   TableHead,
@@ -48,29 +49,42 @@ var synth = new Tone.PolySynth(6, Tone.Synth, {
 const notes = ['C4', 'F4', 'B4', 'D5', 'G5', 'Bb5'];
 function LandingPage() {
   const [kusamaFace, setKusamaFace] = useState(null);
+  const [lastTransfers, setLastTransfers] = useState(null);
 
-  useEffect(() => {
-    const getGenesishash = async () => {
-      const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
-      const api = await ApiPromise.create({ provider: provider });
-      const unsub = await api.query.timestamp.now((moment) => {
-        synth.set('detune', -1200);
-        //play a chord
-        synth.triggerAttackRelease(['C4', 'E4', 'A4'], '4n');
-        console.log(`The last block has a timestamp of ${moment}`);
-      });
-      return api.genesisHash.toHex();
-    };
+  useEffect(async () => {
+    const lastTransfersResp = await axios.get("https://api-01.polkascan.io/kusama/api/v1/balances/transfer")
+    const lastTransfersData = lastTransfersResp.data.data
+    const lastTransfers = lastTransfersData.slice(0, 10).map(item => {
+      return {
+        from: {
+          address: item.attributes.sender.attributes.address,
+          balance: item.attributes.sender.attributes.balance_total
+        },
+        to: item.attributes.destination.attributes.address,
+        amount: item.attributes.value
+      }
+    })
 
-    getGenesishash().then((genesisHash) => {
-      console.log(genesisHash);
-      getImage('KszLJ4soPWsj9SqohCEALSM3LK4ZYcrhFb7K8GZqf3WYgmZ', 0)
-        .then((r) => {
-          const data = r.data;
-          setKusamaFace(data[Object.keys(data)[0]]);
-        })
-        .catch((e) => console.log(e));
-    });
+    const reqBody = await lastTransfers.reduce(function(obj, transfer) {
+      obj[transfer.from.address] = transfer.from.balance;
+      return obj;
+    }, {});
+    console.log(reqBody)
+    const imagesResp = await axios.post('http://localhost:3141/kusama', reqBody)
+    const imagesData = imagesResp.data
+    console.log(imagesData)
+
+    for (let [address, image] of Object.entries(imagesData)) {
+      for (var index in lastTransfers) {
+        if (lastTransfers[index].from.address === address) {
+          lastTransfers[index].from.image = image;
+        }
+      }
+    }
+
+    setLastTransfers(
+      lastTransfers
+    )
   }, []);
 
   return (
@@ -83,48 +97,26 @@ function LandingPage() {
           <Table>
             <TableHead>
               <TableRow head>
-                <TableHeadCell>Type</TableHeadCell>
-
-                <TableHeadCell>From</TableHeadCell>
+                <TableHeadCell>From Image</TableHeadCell>
+                <TableHeadCell>From Address</TableHeadCell>
                 <TableHeadCell>To</TableHeadCell>
-
-                <TableHeadCell>Value</TableHeadCell>
+                <TableHeadCell>Amount</TableHeadCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
-              <TableRow>
-                <TableDataCell style={{ textAlign: 'center' }}>
-                  🌿
-                </TableDataCell>
+              {lastTransfers && lastTransfers.map(transfer => {
+                return (
+                  <TableRow>
+                    <TableDataCell style={{ textAlign: 'center' }}>
+                      {transfer.from.image && <img style={{width: "75px", borderRadius: "50%"}} src={`data:image/jpeg;base64,${transfer.from.image}`} />}
+                    </TableDataCell>
 
-                <TableDataCell>Bulbasaur</TableDataCell>
-                <TableDataCell>Bulbasaur</TableDataCell>
-
-                <TableDataCell>64</TableDataCell>
-              </TableRow>
-
-              <TableRow>
-                <TableDataCell style={{ textAlign: 'center' }}>
-                  🔥
-                </TableDataCell>
-
-                <TableDataCell>Charizard</TableDataCell>
-                <TableDataCell>Charizard</TableDataCell>
-
-                <TableDataCell>209</TableDataCell>
-              </TableRow>
-
-              <TableRow>
-                <TableDataCell style={{ textAlign: 'center' }}>
-                  ⚡
-                </TableDataCell>
-
-                <TableDataCell>Pikachu</TableDataCell>
-                <TableDataCell>Pikachu</TableDataCell>
-
-                <TableDataCell>82</TableDataCell>
-              </TableRow>
+                    <TableDataCell style={{fontWeight: 600}}>{transfer.from.address}</TableDataCell>
+                    <TableDataCell style={{fontStyle: "italic"}}>{transfer.to}</TableDataCell>
+                    <TableDataCell>{transfer.amount}</TableDataCell>
+                  </TableRow>)
+              })}
             </TableBody>
           </Table>
         </WindowContent>
