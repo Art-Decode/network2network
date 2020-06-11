@@ -4,11 +4,11 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import ValidatorCard from '../components/ValidatorCard';
 import { getImage } from '../utils/polka';
 
-function AccountPage({ validators }) {
+function AccountPage({ validators, network }) {
   const [account, setAccount] = useState(null);
 
   useEffect(async () => {
-    const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
+    const provider = new WsProvider(network === "kusama" ? 'wss://cc3-5.kusama.network/' : 'wss://cc1-1.polkadot.network');
     const api = await ApiPromise.create({ provider: provider });
 
     console.log(api.derive);
@@ -20,7 +20,7 @@ function AccountPage({ validators }) {
       const details = await api.query.system.account(account.address);
       account.balance = `${details.data.free}`;
 
-      const image = await getImage(account.address, account.balance);
+      const image = await getImage(account.address, account.balance, network);
       account.image = image.data[account.address];
 
       setAccount(account);

@@ -47,13 +47,13 @@ var synth = new Tone.PolySynth(6, Tone.Synth, {
 }).toMaster();
 
 const notes = ['C4', 'F4', 'B4', 'D5', 'G5', 'Bb5'];
-function LandingPage() {
+function LandingPage({network}) {
   const [kusamaFace, setKusamaFace] = useState(null);
   const [lastTransfers, setLastTransfers] = useState(null);
 
   const getLastTransfert = async () => {
     const lastTransfersResp = await axios.get(
-      'https://api-01.polkascan.io/kusama/api/v1/balances/transfer'
+      `https://api-01.polkascan.io/${network}/api/v1/balances/transfer`
     );
     const lastTransfersData = lastTransfersResp.data.data;
     const lastTransfers = lastTransfersData.slice(0, 10).map((item) => {
@@ -72,7 +72,7 @@ function LandingPage() {
       return obj;
     }, {});
     console.log(reqBody);
-    const imagesResp = await axios.post('/api/kusama', reqBody);
+    const imagesResp = await axios.post(`/api/${network}`, reqBody);
     const imagesData = imagesResp.data;
     console.log(imagesData);
 

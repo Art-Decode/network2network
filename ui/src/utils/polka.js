@@ -7,10 +7,10 @@ var config = {
   },
 };
 
-export const getImage = (address, balance) =>
+export const getImage = (address, balance, network) =>
   axios({
     method: 'post',
-    url: '/api/kusama',
+    url: `/api/${network}`,
     data: {
       [address]: balance,
     },

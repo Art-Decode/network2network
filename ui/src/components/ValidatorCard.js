@@ -6,7 +6,7 @@ const ValidatorCard = ({ image, address, balance }) => {
     <Window>
       <WindowContent>
         <Fieldset>
-          {image && <img src={`data:image/jpeg;base64,${image}`} />}
+          {image && <img style={{maxHeight: "500px"}} src={`data:image/jpeg;base64,${image}`} />}
           <p>{address}</p>
           <p>{balance}</p>
         </Fieldset>

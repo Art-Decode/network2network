@@ -5,13 +5,13 @@ import WalletCard from '../components/WalletCard';
 import { Grid } from '@material-ui/core';
 import { getImage } from '../utils/polka';
 
-function WalletPage({ address }) {
+function WalletPage({ address, network }) {
   const [balance, setBalance] = useState(0);
   const [image, setImage] = useState(null);
 
   useEffect(() => {
     const getApi = async () => {
-      const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
+      const provider = new WsProvider(network === "kusama" ? 'wss://kusama-rpc.polkadot.io/' : 'wss://cc1-1.polkadot.network');
       const api = await ApiPromise.create({ provider: provider });
       try {
         let {

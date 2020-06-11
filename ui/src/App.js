@@ -4,7 +4,6 @@ import LandingPage from './scenes/landing-page';
 import AccountPage from './scenes/account';
 import ValidatorsPage from './scenes/validators';
 import WalletPage from './scenes/wallet';
-import NetworkPage from './scenes/network-selection';
 import { Keyring } from '@polkadot/api';
 import NavBar from './scenes/nav-bar';
 import { Router } from '@reach/router';
@@ -52,10 +51,10 @@ function App() {
     const address = `${keyring.getPair(pairAlice.address).address}`;
     setMyAddress(address);
 
-    const getImage = () => {
+    const getImage = (network) => {
       axios({
         method: 'post',
-        url: '/api/kusama',
+        url: `/api/${network}`,
         data: {
           [address]: 0,
         },
@@ -80,7 +79,7 @@ function App() {
         setPolkadot(data[Object.keys(data)[0]]);
       })
       .catch((e) => console.log(e));
-    getImage();
+    getImage(network);
   }, []);
 
   return (
@@ -105,7 +104,7 @@ function App() {
               <Grid item xs={4}>
                 {polkadot && (
                   <img
-                    style={{ width: '509px' }}
+                    onClick={() => setNetwork('polkadot')}
                     src={`data:image/jpeg;base64,${polkadot}`}
                   />
                 )}
@@ -121,11 +120,10 @@ function App() {
             image={image}
           ></NavBar>
           <Router>
-            <LandingPage path="/" />
-            <AccountPage path="account/:address" />
-            <WalletPage address={myAddress} path="/wallet" />
-            <ValidatorsPage validators={[]} path="validators" />
-            <NetworkPage path="networks" />
+            <LandingPage path="/" network={network} />
+            <AccountPage path="account/:address" network={network} />
+            <WalletPage address={myAddress} path="/wallet" network={network} />
+            <ValidatorsPage validators={[]} path="validators" network={network} />
           </Router>
         </div>
       )}

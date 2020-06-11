@@ -40,7 +40,7 @@ function NavBar({ myAddress, image, changeNetwork }) {
             </Button>
             {open && (
               <List horizontalAlign="left" verticalAlign="bottom">
-                <Link to={`/landing`} style={{ textDecoration: 'none' }}>
+                <Link to={`/`} style={{ textDecoration: 'none' }}>
                   <ListItem onClick={() => setOpen(!open)}>👨‍💻 Home</ListItem>
                 </Link>
 
@@ -89,7 +89,7 @@ function NavBar({ myAddress, image, changeNetwork }) {
             </Link>
             <Link style={{ textDecoration: 'none' }} to={`wallet`}>
               <Avatar style={{ width: '36px', height: '36px' }}>
-                <img src={`data:image/jpeg;base64,${image}`} />{' '}
+                <img style={{ width: '36px' }} src={`data:image/jpeg;base64,${image}`} />{' '}
               </Avatar>
             </Link>
           </>
