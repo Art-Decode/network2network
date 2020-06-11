@@ -10,6 +10,7 @@ fastapi = "*"
 uvicorn = "*"
 pillow = "*"
 tensorflow-gpu = "==1.14.0"
+base58 = "*"
 
 [requires]
 python_version = "3.6"
