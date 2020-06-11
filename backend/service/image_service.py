@@ -121,7 +121,6 @@ class ImageService:
         avatars = np.array([_NETWORK_CONFIG[self.network]['avatar'] for _ in range(_MAX_IMAGES)])
         lat_dir = _NETWORK_CONFIG[self.network]['block_height_latent']
         lat_dir_scales = [_NETWORK_CONFIG[self.network]['block_height_scale'](block_height) for _ in range(_MAX_IMAGES)]
-        print(lat_dir_scales)
         raw_image = self.GAN.generate_images_w_lat(avatars,
                                                     lat_dir_scales=lat_dir_scales,
                                                     lat_dir=lat_dir,
