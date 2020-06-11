@@ -70,7 +70,7 @@ function LandingPage() {
       return obj;
     }, {});
     console.log(reqBody)
-    const imagesResp = await axios.post('http://localhost:3141/kusama', reqBody)
+    const imagesResp = await axios.post('/api/kusama', reqBody)
     const imagesData = imagesResp.data
     console.log(imagesData)
 
