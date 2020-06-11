@@ -40,7 +40,7 @@ function NavBar({ myAddress, image }) {
             </Button>
             {open && (
               <List horizontalAlign="left" verticalAlign="bottom">
-                <Link to={`/`} style={{ textDecoration: 'none' }}>
+                <Link to={`/landing`} style={{ textDecoration: 'none' }}>
                   <ListItem onClick={() => setOpen(!open)}>👨‍💻 Home</ListItem>
                 </Link>
 

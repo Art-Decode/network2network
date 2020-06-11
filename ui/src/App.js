@@ -12,6 +12,7 @@ import axios from 'axios';
 import { Grid } from '@material-ui/core';
 import { getValidators } from './utils/polka';
 import Typography from '@material-ui/core/Typography';
+import { Link } from '@reach/router';
 import {
   getNetworkAvatarKusama,
   getNetworkAvatarPolkadot,
@@ -36,7 +37,7 @@ var config = {
 function App() {
   const [myAddress, setMyAddress] = useState(null);
   const [image, setImage] = useState(null);
-  const [network, setnetwork] = useState(null);
+  const [network, setNetwork] = useState(null);
   const [kusama, setKusama] = useState(null);
   const [polkadot, setPolkadot] = useState(null);
 
@@ -81,28 +82,25 @@ function App() {
   return (
     <React.Fragment>
       {network === null ? (
-        <Grid
-          container
-          direction="column-reverse"
-          justify="space-between"
-          alignItems="center"
-        >
+        <Grid container direction="column" justify="space-between">
           {' '}
-          <Grid item xs={12}>
+          <Grid style={{ margin: 'auto', marginBottom: '100px' }} item xs={12}>
             <h1>CHOOSE YOUR NETWORK </h1>
           </Grid>
           <Grid item xs={12}>
-            <Grid
-              container
-              direction="row"
-              justify="space-evenly"
-              alignItems="center"
-            >
+            <Grid container direction="row" justify="space-around">
               {' '}
-              <Grid item xs={6}>
-                {kusama && <img src={`data:image/jpeg;base64,${kusama}`} />}
+              <Grid item xs={4}>
+                {kusama && (
+                  <Link to={`/landing`} style={{ textDecoration: 'none' }}>
+                    <img
+                      onClick={() => setNetwork('kusama')}
+                      src={`data:image/jpeg;base64,${kusama}`}
+                    />
+                  </Link>
+                )}
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 {polkadot && (
                   <img
                     style={{ width: '509px' }}
@@ -117,7 +115,7 @@ function App() {
         <div className="App">
           <NavBar myAddress={myAddress} image={image}></NavBar>
           <Router>
-            <LandingPage path="/" />
+            <LandingPage path="/landing" />
             <AccountPage path="account/:address" />
             <WalletPage address={myAddress} path="/wallet" />
             <ValidatorsPage validators={[]} path="validators" />
