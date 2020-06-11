@@ -28,15 +28,16 @@ function AccountPage({ validators }) {
       .catch((e) => console.log(e));
   };
 
-  /*   useEffect(() => {
-    const validatorsShortList = validators.slice(0, 5);
+  useEffect(async () => {
+    const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
+    const api = await ApiPromise.create({ provider: provider });
 
-    validatorsShortList.map(async (el) => {
-      const data = {};
-      data[el.address] = el.balance.slice(0, 2);
-      await getImages(data);
+    console.log(api.derive)
+
+    api.derive.chain.subscribeNewHeads((header) => {
+      console.log(`HEAD: ${header.author}`);
     });
-  }, []); */
+  }, []);
 
   return (
     <React.Fragment>

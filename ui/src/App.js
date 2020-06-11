@@ -57,7 +57,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar myAddress={myAddress} image={image}></NavBar>
+      <NavBar style={{paddingBottom: "150px"}} myAddress={myAddress} image={image}></NavBar>
       <Router>
         <LandingPage path="/" />
         <AccountPage path="account/:address" />
