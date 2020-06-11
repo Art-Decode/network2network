@@ -2,7 +2,7 @@
 
 [🅻🅸🆅🅴 🅳🅴🅼🅾](http://34.73.91.75/)
 
-Network2network is the block explorer you've been waiting for, (っ◔◡◔)っ ♥ kusama-san ♥.
+Network2network is the block explorer | art performance | game  you've been waiting for, (っ◔◡◔)っ ♥ kusama-san ♥.
 
 `🌺 ｉｔ ｔａｋｅｓ ｄａｔａ ｆｒｏｍ ｏｎｅ ｎｅｔｗｏｒｋ ａｎｄ ｍａｐｓ ｉｔ ｔｏ ａｎｏｔｈｅｒ ｏｎｅ ， ｙａｙ 🌺`
 
@@ -41,6 +41,19 @@ The blockheight is visualised by an aging man.
 | Block height | 0 | 400,000 | 1,000,000 | 
 | - | - | - | - |
 | **Image** | ![0](assets/polkadot-0.png) |![400000](assets/polkadot-400000.png) | ![1000000](assets/polkadot-1000000.png)  
+
+
+# Tutorial 👩‍🏫
+## Choose your network
+
+The image rapresent a specific network and is mapped with the genesis hash.
+Kusama it's a young and enterprising lady, she's an Anime from Fukuoka and doesnt'age.
+Polkadot is a young brat, he cannot go to clubs yet and he ages depending on the block height. All the bad card Polkadot! 🙁
+
+![0](assets/tutorial1.png) 
+
+---- NEXT STEPS DETAILS TOMORROW  -----
+check the asset folder images if you cannot wait
 
 
 # Attributions どうもありがとうございます！
