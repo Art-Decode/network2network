@@ -11,7 +11,7 @@ const AccountCard = ({ image, address, balance }) => {
       <WindowContent>
         <Grid container spacing={2}>
           <Fieldset>
-            {image && <img src={`data:image/jpeg;base64,${image}`} />}
+            {image && <img style={{maxHeight: "500px"}} src={`data:image/jpeg;base64,${image}`} />}
           </Fieldset>
           <Fieldset>
             <Typography variant="h5" gutterBottom>

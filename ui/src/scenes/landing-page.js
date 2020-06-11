@@ -47,32 +47,34 @@ var synth = new Tone.PolySynth(6, Tone.Synth, {
 }).toMaster();
 
 const notes = ['C4', 'F4', 'B4', 'D5', 'G5', 'Bb5'];
-function LandingPage() {
+function LandingPage({network}) {
   const [kusamaFace, setKusamaFace] = useState(null);
   const [lastTransfers, setLastTransfers] = useState(null);
 
-  useEffect(async () => {
-    const lastTransfersResp = await axios.get("https://api-01.polkascan.io/kusama/api/v1/balances/transfer")
-    const lastTransfersData = lastTransfersResp.data.data
-    const lastTransfers = lastTransfersData.slice(0, 10).map(item => {
+  const getLastTransfert = async () => {
+    const lastTransfersResp = await axios.get(
+      `https://api-01.polkascan.io/${network}/api/v1/balances/transfer`
+    );
+    const lastTransfersData = lastTransfersResp.data.data;
+    const lastTransfers = lastTransfersData.slice(0, 10).map((item) => {
       return {
         from: {
           address: item.attributes.sender.attributes.address,
-          balance: item.attributes.sender.attributes.balance_total
+          balance: item.attributes.sender.attributes.balance_total,
         },
         to: item.attributes.destination.attributes.address,
-        amount: item.attributes.value
-      }
-    })
+        amount: item.attributes.value,
+      };
+    });
 
-    const reqBody = await lastTransfers.reduce(function(obj, transfer) {
+    const reqBody = await lastTransfers.reduce(function (obj, transfer) {
       obj[transfer.from.address] = transfer.from.balance;
       return obj;
     }, {});
-    console.log(reqBody)
-    const imagesResp = await axios.post('http://localhost:3141/kusama', reqBody)
-    const imagesData = imagesResp.data
-    console.log(imagesData)
+    console.log(reqBody);
+    const imagesResp = await axios.post(`/api/${network}`, reqBody);
+    const imagesData = imagesResp.data;
+    console.log(imagesData);
 
     for (let [address, image] of Object.entries(imagesData)) {
       for (var index in lastTransfers) {
@@ -82,10 +84,12 @@ function LandingPage() {
       }
     }
 
-    setLastTransfers(
-      lastTransfers
-    )
-  }, []);
+    setLastTransfers(lastTransfers);
+  };
+
+  useEffect(() => {
+    getLastTransfert();
+  }, [getLastTransfert]);
 
   return (
     <div className="App-header">
@@ -105,18 +109,29 @@ function LandingPage() {
             </TableHead>
 
             <TableBody>
-              {lastTransfers && lastTransfers.map(transfer => {
-                return (
-                  <TableRow>
-                    <TableDataCell style={{ textAlign: 'center' }}>
-                      {transfer.from.image && <img style={{width: "75px", borderRadius: "50%"}} src={`data:image/jpeg;base64,${transfer.from.image}`} />}
-                    </TableDataCell>
+              {lastTransfers &&
+                lastTransfers.map((transfer) => {
+                  return (
+                    <TableRow>
+                      <TableDataCell style={{ textAlign: 'center' }}>
+                        {transfer.from.image && (
+                          <img
+                            style={{ width: '75px', borderRadius: '50%' }}
+                            src={`data:image/jpeg;base64,${transfer.from.image}`}
+                          />
+                        )}
+                      </TableDataCell>
 
-                    <TableDataCell style={{fontWeight: 600}}>{transfer.from.address}</TableDataCell>
-                    <TableDataCell style={{fontStyle: "italic"}}>{transfer.to}</TableDataCell>
-                    <TableDataCell>{transfer.amount}</TableDataCell>
-                  </TableRow>)
-              })}
+                      <TableDataCell style={{ fontWeight: 600 }}>
+                        {transfer.from.address}
+                      </TableDataCell>
+                      <TableDataCell style={{ fontStyle: 'italic' }}>
+                        {transfer.to}
+                      </TableDataCell>
+                      <TableDataCell>{transfer.amount}</TableDataCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </WindowContent>

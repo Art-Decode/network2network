@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import {
   AppBar,
@@ -13,10 +13,23 @@ import {
 } from 'react95';
 import Grid from '@material-ui/core/Grid';
 import { Link } from '@reach/router';
+import { getImage } from '../utils/polka';
 
-function NavBar({ myAddress, image }) {
+function NavBar({ myAddress, network, changeNetwork }) {
   const [account, setAccount] = useState('');
   const [open, setOpen] = useState(false);
+  const [image, setImage] = useState('')
+
+  const getAndSetImage = async () => {
+    const image = await getImage(myAddress, 0, network);
+    setImage(
+      image.data[myAddress]
+    )
+  }
+
+  useEffect(() => {
+    getAndSetImage()
+  }, []);
 
   const handleChange = (e) => setAccount(e.target.value);
   const truncate = (str) => {
@@ -49,8 +62,10 @@ function NavBar({ myAddress, image }) {
                     📁 My wallet
                   </ListItem>
                 </Link>
-                <Link to={`networks`}>
-                  <ListItem>🌐 Change Network</ListItem>
+                <Link to={`/`} style={{ textDecoration: 'none' }}>
+                  <ListItem onClick={() => changeNetwork(null)}>
+                    🌐 Change Network
+                  </ListItem>
                 </Link>
 
                 <Link to={`validators`} style={{ textDecoration: 'none' }}>
@@ -87,7 +102,7 @@ function NavBar({ myAddress, image }) {
             </Link>
             <Link style={{ textDecoration: 'none' }} to={`wallet`}>
               <Avatar style={{ width: '36px', height: '36px' }}>
-                <img src={`data:image/jpeg;base64,${image}`} />{' '}
+                <img style={{ width: '36px' }} src={`data:image/jpeg;base64,${image}`} />{' '}
               </Avatar>
             </Link>
           </>

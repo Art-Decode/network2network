@@ -4,7 +4,6 @@ import LandingPage from './scenes/landing-page';
 import AccountPage from './scenes/account';
 import ValidatorsPage from './scenes/validators';
 import WalletPage from './scenes/wallet';
-import NetworkPage from './scenes/network-selection';
 import { Keyring } from '@polkadot/api';
 import NavBar from './scenes/nav-bar';
 import { Router } from '@reach/router';
@@ -12,6 +11,7 @@ import axios from 'axios';
 import { Grid } from '@material-ui/core';
 import { getValidators } from './utils/polka';
 import Typography from '@material-ui/core/Typography';
+import { Link } from '@reach/router';
 import {
   getNetworkAvatarKusama,
   getNetworkAvatarPolkadot,
@@ -36,9 +36,13 @@ var config = {
 function App() {
   const [myAddress, setMyAddress] = useState(null);
   const [image, setImage] = useState(null);
-  const [network, setnetwork] = useState(null);
+  const [network, setNetwork] = useState(null);
   const [kusama, setKusama] = useState(null);
   const [polkadot, setPolkadot] = useState(null);
+
+  const changeNetwork = (network) => {
+    setNetwork(network);
+  };
 
   useEffect(() => {
     const ALICE_SEED = generateRandomString().padEnd(32, ' ');
@@ -47,10 +51,10 @@ function App() {
     const address = `${keyring.getPair(pairAlice.address).address}`;
     setMyAddress(address);
 
-    const getImage = () => {
+    const getImage = (network) => {
       axios({
         method: 'post',
-        url: 'http://localhost:3141/kusama',
+        url: `/api/${network}`,
         data: {
           [address]: 0,
         },
@@ -75,37 +79,32 @@ function App() {
         setPolkadot(data[Object.keys(data)[0]]);
       })
       .catch((e) => console.log(e));
-    getImage();
+    getImage(network);
   }, []);
 
   return (
     <React.Fragment>
       {network === null ? (
-        <Grid
-          container
-          direction="column-reverse"
-          justify="space-between"
-          alignItems="center"
-        >
+        <Grid container direction="column" justify="space-between">
           {' '}
-          <Grid item xs={12}>
+          <Grid style={{ margin: 'auto', marginBottom: '100px' }} item xs={12}>
             <h1>CHOOSE YOUR NETWORK </h1>
           </Grid>
           <Grid item xs={12}>
-            <Grid
-              container
-              direction="row"
-              justify="space-evenly"
-              alignItems="center"
-            >
+            <Grid container direction="row" justify="space-around">
               {' '}
-              <Grid item xs={6}>
-                {kusama && <img src={`data:image/jpeg;base64,${kusama}`} />}
+              <Grid item xs={4}>
+                {kusama && (
+                  <img
+                    onClick={() => setNetwork('kusama')}
+                    src={`data:image/jpeg;base64,${kusama}`}
+                  />
+                )}
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 {polkadot && (
                   <img
-                    style={{ width: '509px' }}
+                    onClick={() => setNetwork('polkadot')}
                     src={`data:image/jpeg;base64,${polkadot}`}
                   />
                 )}
@@ -115,13 +114,16 @@ function App() {
         </Grid>
       ) : (
         <div className="App">
-          <NavBar myAddress={myAddress} image={image}></NavBar>
+          <NavBar
+            changeNetwork={changeNetwork}
+            network={network}
+            myAddress={myAddress}
+          ></NavBar>
           <Router>
-            <LandingPage path="/" />
-            <AccountPage path="account/:address" />
-            <WalletPage address={myAddress} path="/wallet" />
-            <ValidatorsPage validators={[]} path="validators" />
-            <NetworkPage path="networks" />
+            <LandingPage path="/" network={network} />
+            <AccountPage path="account/:address" network={network} />
+            <WalletPage address={myAddress} path="/wallet" network={network} />
+            <ValidatorsPage validators={[]} path="validators" network={network} />
           </Router>
         </div>
       )}

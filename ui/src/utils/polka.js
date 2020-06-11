@@ -7,10 +7,10 @@ var config = {
   },
 };
 
-export const getImage = (address, balance) =>
+export const getImage = (address, balance, network) =>
   axios({
     method: 'post',
-    url: 'http://localhost:3141/kusama',
+    url: `/api/${network}`,
     data: {
       [address]: balance,
     },
@@ -20,7 +20,7 @@ export const getImage = (address, balance) =>
 export const getImageKusama = (address, balance) =>
   axios({
     method: 'post',
-    url: 'http://localhost:3141/polkadot',
+    url: '/api/polkadot',
     data: {
       [address]: balance,
     },
@@ -30,14 +30,14 @@ export const getImageKusama = (address, balance) =>
 export const getNetworkAvatarKusama = () =>
   axios({
     method: 'get',
-    url: 'http://localhost:3141/kusama/avatar/2703324',
+    url: '/api/kusama/avatar/2703324',
     config,
   });
 
 export const getNetworkAvatarPolkadot = () =>
   axios({
     method: 'get',
-    url: 'http://localhost:3141/polkadot/avatar/200000',
+    url: '/api/polkadot/avatar/200000',
     config,
   });
 

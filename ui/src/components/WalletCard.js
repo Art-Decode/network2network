@@ -27,16 +27,12 @@ const AccountCard = ({ image, address, balance }) => {
           <Tab value={1} onClick={() => setActiveTab(1)}>
             My Tokens
           </Tab>
-
-          <Tab value={2} onClick={() => setActiveTab(2)}>
-            History
-          </Tab>
         </Tabs>
         {activeTab === 0 && (
           <TabBody>
             <Fieldset>
               {image ? (
-                <img src={`data:image/jpeg;base64,${image}`} />
+                <img style={{maxHeight: "500px"}} src={`data:image/jpeg;base64,${image}`} />
               ) : (
                 <Progress percent={52} />
               )}
@@ -62,21 +58,6 @@ const AccountCard = ({ image, address, balance }) => {
               <span role="img" aria-label="donut">
                 😫
               </span>{' '}
-            </Fieldset>
-          </TabBody>
-        )}
-        {activeTab === 2 && (
-          <TabBody>
-            <Fieldset>
-              {image && <img src={`data:image/jpeg;base64,${image}`} />}
-              <Typography variant="h5" gutterBottom>
-                🌴 Address 🌴{' '}
-              </Typography>
-              <p>{address}</p>
-              <br />
-              <Typography variant="h5" gutterBottom>
-                💴 Balance 💴{' '}
-              </Typography>
             </Fieldset>
           </TabBody>
         )}
