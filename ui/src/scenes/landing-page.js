@@ -75,8 +75,11 @@ function LandingPage() {
     console.log(imagesData)
 
     for (let [address, image] of Object.entries(imagesData)) {
-      let index = lastTransfers.findIndex(transfer => transfer.from.address === address)
-      lastTransfers[index].from.image = image
+      for (var index in lastTransfers) {
+        if (lastTransfers[index].from.address === address) {
+          lastTransfers[index].from.image = image;
+        }
+      }
     }
 
     setLastTransfers(
