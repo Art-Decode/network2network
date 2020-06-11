@@ -89,10 +89,6 @@ function App() {
     <React.Fragment>
       {network === null ? (
         <Grid container direction="column" justify="space-between">
-          {' '}
-          <Grid style={{ margin: 'auto', marginBottom: '100px' }} item xs={12}>
-            <h1>CHOOSE YOUR NETWORK </h1>
-          </Grid>
           <Grid item xs={12}>
             <Grid container direction="row" justify="space-around">
               {' '}
@@ -117,7 +113,7 @@ function App() {
                     />
                     <img
                       src={polkadotLogo}
-                      style={{ marginTop: '-80px', marginTop: '-70px' }}
+                      style={{ marginTop: '-80px', marginLeft: '-70px' }}
                       alt="Logo"
                     />
                   </div>
