@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import ValidatorCard from '../components/ValidatorCard';
-import { getImage } from '../utils/polka'
+import { getImage } from '../utils/polka';
 
 function AccountPage({ validators }) {
   const [account, setAccount] = useState(null);
@@ -11,21 +11,19 @@ function AccountPage({ validators }) {
     const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
     const api = await ApiPromise.create({ provider: provider });
 
-    console.log(api.derive)
+    console.log(api.derive);
 
     api.derive.chain.subscribeNewHeads(async (header) => {
       const account = {
-        address: `${header.author}`
-      }
+        address: `${header.author}`,
+      };
       const details = await api.query.system.account(account.address);
-      account.balance = `${details.data.free}`
+      account.balance = `${details.data.free}`;
 
       const image = await getImage(account.address, account.balance);
-      account.image = image.data[account.address]
+      account.image = image.data[account.address];
 
-      setAccount(
-        account
-      )
+      setAccount(account);
     });
   }, []);
 
@@ -40,7 +38,11 @@ function AccountPage({ validators }) {
           alt="http://picasion.com/gl/cQ2e/"
         />
         <span>
-          <ValidatorCard address={account && account.address} balance={account && account.balance} image={account && account.image}></ValidatorCard>
+          <ValidatorCard
+            address={account && account.address}
+            balance={account && account.balance}
+            image={account && account.image}
+          ></ValidatorCard>
         </span>
       </div>
     </React.Fragment>

@@ -41,6 +41,10 @@ function App() {
   const [kusama, setKusama] = useState(null);
   const [polkadot, setPolkadot] = useState(null);
 
+  const changeNetwork = (network) => {
+    setNetwork(network);
+  };
+
   useEffect(() => {
     const ALICE_SEED = generateRandomString().padEnd(32, ' ');
     const keyring = new Keyring();
@@ -92,12 +96,10 @@ function App() {
               {' '}
               <Grid item xs={4}>
                 {kusama && (
-                  <Link to={`/landing`} style={{ textDecoration: 'none' }}>
-                    <img
-                      onClick={() => setNetwork('kusama')}
-                      src={`data:image/jpeg;base64,${kusama}`}
-                    />
-                  </Link>
+                  <img
+                    onClick={() => setNetwork('kusama')}
+                    src={`data:image/jpeg;base64,${kusama}`}
+                  />
                 )}
               </Grid>
               <Grid item xs={4}>
@@ -113,9 +115,13 @@ function App() {
         </Grid>
       ) : (
         <div className="App">
-          <NavBar myAddress={myAddress} image={image}></NavBar>
+          <NavBar
+            changeNetwork={changeNetwork}
+            myAddress={myAddress}
+            image={image}
+          ></NavBar>
           <Router>
-            <LandingPage path="/landing" />
+            <LandingPage path="/" />
             <AccountPage path="account/:address" />
             <WalletPage address={myAddress} path="/wallet" />
             <ValidatorsPage validators={[]} path="validators" />

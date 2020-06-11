@@ -36,7 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-choose-network:hover {
-  background-color: red;
-}

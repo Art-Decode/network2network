@@ -14,7 +14,7 @@ import {
 import Grid from '@material-ui/core/Grid';
 import { Link } from '@reach/router';
 
-function NavBar({ myAddress, image }) {
+function NavBar({ myAddress, image, changeNetwork }) {
   const [account, setAccount] = useState('');
   const [open, setOpen] = useState(false);
 
@@ -49,8 +49,10 @@ function NavBar({ myAddress, image }) {
                     📁 My wallet
                   </ListItem>
                 </Link>
-                <Link to={`networks`}>
-                  <ListItem>🌐 Change Network</ListItem>
+                <Link to={`/`} style={{ textDecoration: 'none' }}>
+                  <ListItem onClick={() => changeNetwork(null)}>
+                    🌐 Change Network
+                  </ListItem>
                 </Link>
 
                 <Link to={`validators`} style={{ textDecoration: 'none' }}>
