@@ -53,7 +53,7 @@ def get_bias_random_vector_polkadot() -> Callable[[np.ndarray], np.ndarray]:
 
 
 def get_sigmoid_for_max_n(max_n: int) -> Callable[[float], float]:
-    return lambda t: (1 / (1 + np.float_power(np.e, -t / 200000.)) - 0.5) * 2 * max_n
+    return lambda t: (1 / (1 + np.float_power(np.e, -t / 400000.)) - 0.5) * 2 * max_n
 
 
 _NETWORK_CONFIG = {
@@ -72,7 +72,7 @@ _NETWORK_CONFIG = {
         'balance_scale': lambda x: 1. / 1000000 * 0.4 * x if x < 1000000 else 0.4,
         'bias_random': get_bias_random_vector_polkadot(),
         'block_height_latent': np.load('service/latents/age.npy'),
-        'block_height_scale': get_sigmoid_for_max_n(1),
+        'block_height_scale': lambda x: get_sigmoid_for_max_n(1)(x) - 0.2,
         'avatar': np.load('service/avatars/polkadot.npy')
     }
 }
@@ -126,6 +126,7 @@ class ImageService:
                                                     lat_dir=lat_dir,
                                                     bias_random=lambda x: x)[0]
         image = Image.fromarray(raw_image)
+        image = image.resize((512, 512))
         buffered = BytesIO()
         image.save(buffered, format="JPEG")
         return {'avatar': base64.b64encode(buffered.getvalue())}
