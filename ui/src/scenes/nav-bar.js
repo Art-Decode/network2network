@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import {
   AppBar,
@@ -13,10 +13,19 @@ import {
 } from 'react95';
 import Grid from '@material-ui/core/Grid';
 import { Link } from '@reach/router';
+import { getImage } from '../utils/polka';
 
-function NavBar({ myAddress, image, changeNetwork }) {
+function NavBar({ myAddress, network, changeNetwork }) {
   const [account, setAccount] = useState('');
   const [open, setOpen] = useState(false);
+  const [image, setImage] = useState('')
+
+  useEffect(async() => {
+    const image = await getImage(myAddress, 0, network);
+    setImage(
+      image.data[myAddress]
+    )
+  }, []);
 
   const handleChange = (e) => setAccount(e.target.value);
   const truncate = (str) => {

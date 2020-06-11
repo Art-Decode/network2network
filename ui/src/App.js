@@ -116,8 +116,8 @@ function App() {
         <div className="App">
           <NavBar
             changeNetwork={changeNetwork}
+            network={network}
             myAddress={myAddress}
-            image={image}
           ></NavBar>
           <Router>
             <LandingPage path="/" network={network} />

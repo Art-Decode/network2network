@@ -20,7 +20,7 @@ function AccountPage({ address, network }) {
     };
 
     getApi();
-    getImage(address, balance)
+    getImage(address, balance, network)
       .then((r) => {
         const data = r.data;
         setImage(data[Object.keys(data)[0]]);

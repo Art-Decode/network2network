@@ -32,7 +32,7 @@ const AccountCard = ({ image, address, balance }) => {
           <TabBody>
             <Fieldset>
               {image ? (
-                <img src={`data:image/jpeg;base64,${image}`} />
+                <img style={{maxHeight: "500px"}} src={`data:image/jpeg;base64,${image}`} />
               ) : (
                 <Progress percent={52} />
               )}
