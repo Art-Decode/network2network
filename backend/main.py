@@ -18,22 +18,33 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 service_map = {
     'kusama': ImageService(network='kusama'),
-    # add more services if memory allows it
+    'polkadot': ImageService(network='polkadot')
 }
 
 
 @app.post("/{network}")
-async def root(network: str, body: Dict[str, float]):
+async def addresses_to_images(network: str, body: Dict[str, float]):
     service = service_map.get(network)
     if service:
         addresses = list(body.keys())
         balances = list(body.values())
-        response =await service.get_images(addresses, balances)
+        response = await service.get_images(addresses, balances)
         return response
     else:
         raise HTTPException(status_code=404, detail=f'network "{network}" not found')
+
+
+@app.get("/{network}/avatar/{block_height}")
+async def get_avatar(network: str, block_height: int):
+    service = service_map.get(network)
+    if service:
+        return await service.get_avatar(block_height)
+    else:
+        raise HTTPException(status_code=404, detail=f'network "{network}" not found')
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=3141)
