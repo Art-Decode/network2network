@@ -20,11 +20,15 @@ function NavBar({ myAddress, network, changeNetwork }) {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState('')
 
-  useEffect(async() => {
+  const getAndSetImage = async () => {
     const image = await getImage(myAddress, 0, network);
     setImage(
       image.data[myAddress]
     )
+  }
+
+  useEffect(() => {
+    getAndSetImage()
   }, []);
 
   const handleChange = (e) => setAccount(e.target.value);
