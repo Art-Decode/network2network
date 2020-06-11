@@ -17,6 +17,9 @@ import {
   getNetworkAvatarPolkadot,
   getImage,
 } from './utils/polka';
+import kusamaLogo from './kusamaLogo.png';
+
+import polkadotLogo from './polkadotLogo.png';
 
 const stringToU8a = require('@polkadot/util/string/toU8a').default;
 
@@ -95,18 +98,29 @@ function App() {
               {' '}
               <Grid item xs={4}>
                 {kusama && (
-                  <img
-                    onClick={() => setNetwork('kusama')}
-                    src={`data:image/jpeg;base64,${kusama}`}
-                  />
+                  <div>
+                    <img
+                      onClick={() => setNetwork('kusama')}
+                      src={`data:image/jpeg;base64,${kusama}`}
+                    />
+                    <img src={kusamaLogo} alt="Logo" />
+                  </div>
                 )}
               </Grid>
               <Grid item xs={4}>
                 {polkadot && (
-                  <img
-                    onClick={() => setNetwork('polkadot')}
-                    src={`data:image/jpeg;base64,${polkadot}`}
-                  />
+                  <div>
+                    {' '}
+                    <img
+                      onClick={() => setNetwork('polkadot')}
+                      src={`data:image/jpeg;base64,${polkadot}`}
+                    />
+                    <img
+                      src={polkadotLogo}
+                      style={{ marginTop: '-80px', marginTop: '-70px' }}
+                      alt="Logo"
+                    />
+                  </div>
                 )}
               </Grid>
             </Grid>
@@ -123,7 +137,11 @@ function App() {
             <LandingPage path="/" network={network} />
             <AccountPage path="account/:address" network={network} />
             <WalletPage address={myAddress} path="/wallet" network={network} />
-            <ValidatorsPage validators={[]} path="validators" network={network} />
+            <ValidatorsPage
+              validators={[]}
+              path="validators"
+              network={network}
+            />
           </Router>
         </div>
       )}
