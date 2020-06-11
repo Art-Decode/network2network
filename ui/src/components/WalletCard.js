@@ -7,7 +7,10 @@ import {
   Tabs,
   TabBody,
   Tab,
+  Progress,
+  Hourglass,
 } from 'react95';
+import Typography from '@material-ui/core/Typography';
 
 const AccountCard = ({ image, address, balance }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -15,7 +18,7 @@ const AccountCard = ({ image, address, balance }) => {
   return (
     <Window>
       <WindowContent>
-        <WindowHeader>💰 My Wallet</WindowHeader>
+        <WindowHeader>💰 My Wallet 💰 </WindowHeader>
         <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
           <Tab value={0} onClick={() => setActiveTab(0)}>
             Avatar
@@ -32,9 +35,20 @@ const AccountCard = ({ image, address, balance }) => {
         {activeTab === 0 && (
           <TabBody>
             <Fieldset>
-              {image && <img src={`data:image/jpeg;base64,${image}`} />}
+              {image ? (
+                <img src={`data:image/jpeg;base64,${image}`} />
+              ) : (
+                <Progress percent={52} />
+              )}
+              <Typography variant="h5" gutterBottom>
+                🌴 Address 🌴{' '}
+              </Typography>
               <p>{address}</p>
-              <p>{balance}</p>
+              <br />
+              <Typography variant="h5" gutterBottom>
+                💴 Balance 💴{' '}
+              </Typography>
+              {balance}
             </Fieldset>
           </TabBody>
         )}
@@ -44,7 +58,7 @@ const AccountCard = ({ image, address, balance }) => {
               <span role="img" aria-label="donut">
                 😫
               </span>{' '}
-              Oh no! Kusama-san doesn't have any token yet!
+              Oh no! NFT Humans Tokens coming soon!
               <span role="img" aria-label="donut">
                 😫
               </span>{' '}
@@ -55,8 +69,14 @@ const AccountCard = ({ image, address, balance }) => {
           <TabBody>
             <Fieldset>
               {image && <img src={`data:image/jpeg;base64,${image}`} />}
+              <Typography variant="h5" gutterBottom>
+                🌴 Address 🌴{' '}
+              </Typography>
               <p>{address}</p>
-              <p>{balance}</p>
+              <br />
+              <Typography variant="h5" gutterBottom>
+                💴 Balance 💴{' '}
+              </Typography>
             </Fieldset>
           </TabBody>
         )}

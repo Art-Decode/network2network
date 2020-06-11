@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import AccountCard from '../components/AccountCard';
+import WalletCard from '../components/WalletCard';
 import { Grid } from '@material-ui/core';
 import { getImage } from '../utils/polka';
 
-function AccountPage({ address }) {
+function WalletPage({ address }) {
   const [balance, setBalance] = useState(0);
   const [image, setImage] = useState(null);
 
@@ -13,10 +13,14 @@ function AccountPage({ address }) {
     const getApi = async () => {
       const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
       const api = await ApiPromise.create({ provider: provider });
-      let {
-        data: { free: previousFree },
-      } = await api.query.system.account(address);
-      setBalance(`${previousFree}`);
+      try {
+        let {
+          data: { free: previousFree },
+        } = await api.query.system.account(address);
+        setBalance(`${previousFree}`);
+      } catch {
+        console.log('e');
+      }
     };
 
     getApi();
@@ -38,11 +42,11 @@ function AccountPage({ address }) {
           alignItems="center"
         >
           <Grid item>
-            <AccountCard
+            <WalletCard
               image={image}
               address={address}
               balance={balance}
-            ></AccountCard>
+            ></WalletCard>
           </Grid>
         </Grid>
       </span>
@@ -50,4 +54,4 @@ function AccountPage({ address }) {
   );
 }
 
-export default AccountPage;
+export default WalletPage;

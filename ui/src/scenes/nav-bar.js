@@ -31,7 +31,7 @@ function NavBar({ myAddress, image }) {
           justify="flex-start"
           alignItems="center"
         >
-          <Grid item>
+          <Grid item item>
             <Button
               style={{ fontWeight: 'bold' }}
               onClick={() => setOpen(!open)}
@@ -40,18 +40,18 @@ function NavBar({ myAddress, image }) {
             </Button>
             {open && (
               <List horizontalAlign="left" verticalAlign="bottom">
-                <Link to={`/`}>
+                <Link to={`/`} style={{ textDecoration: 'none' }}>
                   <ListItem onClick={() => setOpen(!open)}>👨‍💻 Home</ListItem>
                 </Link>
 
-                <Link to={`account/${myAddress}`}>
+                <Link to={`wallet`} style={{ textDecoration: 'none' }}>
                   <ListItem onClick={() => setOpen(!open)}>
                     📁 My wallet
                   </ListItem>
                 </Link>
 
                 <ListItem>🌐 Change Network</ListItem>
-                <Link to={`validators`}>
+                <Link to={`validators`} style={{ textDecoration: 'none' }}>
                   <ListItem onClick={() => setOpen(!open)}>
                     💂‍♂️ Validators
                   </ListItem>
@@ -63,13 +63,13 @@ function NavBar({ myAddress, image }) {
               </List>
             )}
           </Grid>
-          <Grid item></Grid>
+          <Grid item xs={6}></Grid>{' '}
           <Grid item>
             <TextField
               onChange={handleChange}
               placeholder="Address..."
-              width={150}
-              style={{ marginLeft: 4 }}
+              width={250}
+              style={{ marginLeft: -200 }}
             />
           </Grid>
           <Grid item>
@@ -80,9 +80,11 @@ function NavBar({ myAddress, image }) {
         </Grid>
         {image ? (
           <>
-            <Link to={`account/${myAddress}`}>{truncate(myAddress)}</Link>
-            <Link to={`account/${myAddress}`}>
-              <Avatar>
+            <Link style={{ textDecoration: 'none' }} to={`wallet`}>
+              {truncate(myAddress)}
+            </Link>
+            <Link style={{ textDecoration: 'none' }} to={`wallet`}>
+              <Avatar style={{ width: '36px', height: '36px' }}>
                 <img src={`data:image/jpeg;base64,${image}`} />{' '}
               </Avatar>
             </Link>

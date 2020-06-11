@@ -3,6 +3,7 @@ import './App.css';
 import LandingPage from './scenes/landing-page';
 import AccountPage from './scenes/account';
 import ValidatorsPage from './scenes/validators';
+import WalletPage from './scenes/wallet';
 import { Keyring } from '@polkadot/api';
 import NavBar from './scenes/nav-bar';
 import { Router } from '@reach/router';
@@ -60,6 +61,7 @@ function App() {
       <Router>
         <LandingPage path="/" />
         <AccountPage path="account/:address" />
+        <WalletPage address={myAddress} path="/wallet" />
         <ValidatorsPage validators={[]} path="validators" />
       </Router>
     </div>

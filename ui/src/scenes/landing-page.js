@@ -17,10 +17,35 @@ import Tone from 'tone';
 
 var synth = new Tone.PolySynth(6, Tone.Synth, {
   oscillator: {
-    type: 'square',
+    frequency: 'C4',
+    detune: 0,
+    oscillator: {
+      type: 'square',
+    },
+    filter: {
+      Q: 6,
+      type: 'lowpass',
+      rolloff: -24,
+    },
+    envelope: {
+      attack: 1,
+      decay: 0.1,
+      sustain: 0.9,
+      release: 2,
+    },
+    filterEnvelope: {
+      attack: 2,
+      decay: 0.2,
+      sustain: 0.5,
+      release: 1,
+      baseFrequency: 60,
+      octaves: 7,
+      exponent: 2,
+    },
   },
 }).toMaster();
 
+const notes = ['C4', 'F4', 'B4', 'D5', 'G5', 'Bb5'];
 function LandingPage() {
   const [kusamaFace, setKusamaFace] = useState(null);
 

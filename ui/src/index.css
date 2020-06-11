@@ -1,9 +1,12 @@
+@font-face {
+  font-family: 'Win';
+  src: local('Win'), url(./assets/fonts/Win.ttf) format('truetype');
+}
+
 body {
   background-image: url('https://66.media.tumblr.com/fa02767f78525ca223662dd1fed57d39/tumblr_py3dnpfCka1xbk5hwo2_500.png');
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: Win;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Fieldset,
-  Window,
-  WindowContent,
-  WindowHeader,
-  Tabs,
-  TabBody,
-  Tab,
-} from 'react95';
+import { Grid } from '@material-ui/core';
+import { Fieldset, Window, WindowContent } from 'react95';
+import Typography from '@material-ui/core/Typography';
 
 const AccountCard = ({ image, address, balance }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -15,51 +9,23 @@ const AccountCard = ({ image, address, balance }) => {
   return (
     <Window>
       <WindowContent>
-        <WindowHeader>💰 My Wallet</WindowHeader>
-        <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
-          <Tab value={0} onClick={() => setActiveTab(0)}>
-            Avatar
-          </Tab>
+        <Grid container spacing={2}>
+          <Fieldset>
+            {image && <img src={`data:image/jpeg;base64,${image}`} />}
+          </Fieldset>
+          <Fieldset>
+            <Typography variant="h5" gutterBottom>
+              🌴 Address 🌴{' '}
+            </Typography>
+            <p>{address}</p>
+            <br />
+            <Typography variant="h5" gutterBottom>
+              💴 Balance 💴{' '}
+            </Typography>
 
-          <Tab value={1} onClick={() => setActiveTab(1)}>
-            My Tokens
-          </Tab>
-
-          <Tab value={2} onClick={() => setActiveTab(2)}>
-            History
-          </Tab>
-        </Tabs>
-        {activeTab === 0 && (
-          <TabBody>
-            <Fieldset>
-              {image && <img src={`data:image/jpeg;base64,${image}`} />}
-              <p>{address}</p>
-              <p>{balance}</p>
-            </Fieldset>
-          </TabBody>
-        )}
-        {activeTab === 1 && (
-          <TabBody>
-            <Fieldset>
-              <span role="img" aria-label="donut">
-                😫
-              </span>{' '}
-              Oh no! Kusama-san doesn't have any token yet!
-              <span role="img" aria-label="donut">
-                😫
-              </span>{' '}
-            </Fieldset>
-          </TabBody>
-        )}
-        {activeTab === 2 && (
-          <TabBody>
-            <Fieldset>
-              {image && <img src={`data:image/jpeg;base64,${image}`} />}
-              <p>{address}</p>
-              <p>{balance}</p>
-            </Fieldset>
-          </TabBody>
-        )}
+            <p>{balance}</p>
+          </Fieldset>
+        </Grid>
       </WindowContent>
     </Window>
   );
