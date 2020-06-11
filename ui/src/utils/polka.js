@@ -17,6 +17,30 @@ export const getImage = (address, balance) =>
     config,
   });
 
+export const getImageKusama = (address, balance) =>
+  axios({
+    method: 'post',
+    url: 'http://localhost:3141/polkadot',
+    data: {
+      [address]: balance,
+    },
+    config,
+  });
+
+export const getNetworkAvatarKusama = () =>
+  axios({
+    method: 'get',
+    url: 'http://localhost:3141/kusama/avatar/2703324',
+    config,
+  });
+
+export const getNetworkAvatarPolkadot = () =>
+  axios({
+    method: 'get',
+    url: 'http://localhost:3141/polkadot/avatar/200000',
+    config,
+  });
+
 export const getValidators = async () => {
   const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
   const api = await ApiPromise.create({ provider: provider });

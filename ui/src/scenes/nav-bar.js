@@ -49,8 +49,10 @@ function NavBar({ myAddress, image }) {
                     📁 My wallet
                   </ListItem>
                 </Link>
+                <Link to={`networks`}>
+                  <ListItem>🌐 Change Network</ListItem>
+                </Link>
 
-                <ListItem>🌐 Change Network</ListItem>
                 <Link to={`validators`} style={{ textDecoration: 'none' }}>
                   <ListItem onClick={() => setOpen(!open)}>
                     💂‍♂️ Validators
