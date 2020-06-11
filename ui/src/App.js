@@ -60,7 +60,7 @@ function App() {
       <Router>
         <LandingPage path="/" />
         <AccountPage path="account/:address" />
-        <ValidatorsPage validators={getValidators()} path="validators" />
+        <ValidatorsPage validators={[]} path="validators" />
       </Router>
     </div>
   );

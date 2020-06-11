@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { ApiPromise, WsProvider } from '@polkadot/api';
+import { getImage } from '../utils/polka';
 import {
   Table,
   TableHead,
@@ -12,18 +13,48 @@ import {
   TableDataCell,
   WindowContent,
 } from 'react95';
+import Tone from 'tone';
+
+var synth = new Tone.PolySynth(6, Tone.Synth, {
+  oscillator: {
+    type: 'square',
+  },
+}).toMaster();
 
 function LandingPage() {
-  const [api, setApi] = useState(null);
+  const [kusamaFace, setKusamaFace] = useState(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const getGenesishash = async () => {
+      const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
+      const api = await ApiPromise.create({ provider: provider });
+      const unsub = await api.query.timestamp.now((moment) => {
+        synth.set('detune', -1200);
+        //play a chord
+        synth.triggerAttackRelease(['C4', 'E4', 'A4'], '4n');
+        console.log(`The last block has a timestamp of ${moment}`);
+      });
+      return api.genesisHash.toHex();
+    };
+
+    getGenesishash().then((genesisHash) => {
+      console.log(genesisHash);
+      getImage('KszLJ4soPWsj9SqohCEALSM3LK4ZYcrhFb7K8GZqf3WYgmZ', 0)
+        .then((r) => {
+          const data = r.data;
+          setKusamaFace(data[Object.keys(data)[0]]);
+        })
+        .catch((e) => console.log(e));
+    });
+  }, []);
 
   return (
     <div className="App-header">
       <Window>
         <WindowHeader>Last Transactions</WindowHeader>
-
         <WindowContent>
+          {kusamaFace && <img src={`data:image/jpeg;base64,${kusamaFace}`} />}
+
           <Table>
             <TableHead>
               <TableRow head>
