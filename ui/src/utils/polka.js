@@ -42,7 +42,7 @@ export const getNetworkAvatarPolkadot = () =>
   });
 
 export const getValidators = async () => {
-  const provider = new WsProvider('wss://kusama-rpc.polkadot.io/');
+  const provider = new WsProvider('wss://cc3-5.kusama.network/');
   const api = await ApiPromise.create({ provider: provider });
 
   const validators = await api.query.session.validators();

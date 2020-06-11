@@ -14,7 +14,6 @@ Addresses are visualized by mapping the raw bytes of the base58 decoded address 
 ## 🌸 KUSAMA 🌸
 
 Every kusama address is mapped to a static anime face. 
-[@gwern](https://twitter.com/gwern?lang=de) ありがとうございました。
 
 ### examples
 
@@ -47,6 +46,8 @@ The blockheight is visualised by an aging man.
 # Attributions どうもありがとうございます！
 
 The model used to generate the images is [StyleGAN2](https://github.com/NVlabs/stylegan2) from nvidia.
+
+Anime model taken from [@gwern](https://twitter.com/gwern?lang=de).
 
 Latent directions used for the FFHQ model were found and made available by [Robert Luxemburg](https://twitter.com/robertluxemburg)
 
