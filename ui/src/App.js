@@ -55,7 +55,7 @@ function App() {
     const getImage = () => {
       axios({
         method: 'post',
-        url: 'http://localhost:3141/kusama',
+        url: '/api/kusama',
         data: {
           [address]: 0,
         },
