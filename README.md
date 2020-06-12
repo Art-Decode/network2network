@@ -2,7 +2,7 @@
 
 [🅻🅸🆅🅴 🅳🅴🅼🅾](http://34.73.91.75/)
 
-Network2network is the block explorer | art performance | and avatar generator  you've been waiting for, (っ◔◡◔)っ ♥ kusama-san ♥.
+Network2network is the block explorer and avatar generator  you've been waiting for, (っ◔◡◔)っ ♥ kusama-san ♥.
 
 `🌺 ｉｔ ｔａｋｅｓ ｄａｔａ ｆｒｏｍ ｏｎｅ ｎｅｔｗｏｒｋ ａｎｄ ｍａｐｓ ｉｔ ｔｏ ａｎｏｔｈｅｒ ｏｎｅ ， ｙａｙ 🌺`
 
