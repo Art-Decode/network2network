@@ -2,7 +2,7 @@
 
 [🅻🅸🆅🅴 🅳🅴🅼🅾](http://34.73.91.75/)
 
-Network2network is the block explorer | art performance | game  you've been waiting for, (っ◔◡◔)っ ♥ kusama-san ♥.
+Network2network is the block explorer | art performance | and avatar generator  you've been waiting for, (っ◔◡◔)っ ♥ kusama-san ♥.
 
 `🌺 ｉｔ ｔａｋｅｓ ｄａｔａ ｆｒｏｍ ｏｎｅ ｎｅｔｗｏｒｋ ａｎｄ ｍａｐｓ ｉｔ ｔｏ ａｎｏｔｈｅｒ ｏｎｅ ， ｙａｙ 🌺`
 
@@ -52,7 +52,16 @@ Polkadot is a young brat, he cannot go to clubs yet and he ages depending on the
 
 ![0](assets/tutorial1.png) 
 
----- NEXT STEPS DETAILS TOMORROW  -----
+## Search for an address
+On the top bar you can search for an address and visualize it
+
+![0](assets/tutorial3.png) 
+
+## Burner Wallet
+The application creates a burner wallet, click on the top right icon or "My Wallet" in the start menu
+![0](assets/tutorial4.png) 
+
+---- NEXT STEPS LATER ON TODAY  -----
 check the asset folder images if you cannot wait
 
 
