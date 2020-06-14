@@ -1,32 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
-import { ApiPromise, WsProvider } from '@polkadot/api';
 import AccountCard from '../components/AccountCard';
 import { Grid } from '@material-ui/core';
 import { getImage } from '../utils/polka';
+const { ApiPromise, WsProvider } = require('@polkadot/api');
 
 function AccountPage({ address, network }) {
   const [balance, setBalance] = useState(0);
   const [image, setImage] = useState(null);
 
-  useEffect(() => {
-    const getApi = async () => {
-      const provider = new WsProvider(network === "kusama" ? 'wss://cc3-5.kusama.network/' : 'wss://cc1-1.polkadot.network');
-      const api = await ApiPromise.create({ provider: provider });
-      let {
-        data: { free: previousFree },
-      } = await api.query.system.account(address);
-      setBalance(`${previousFree}`);
-    };
+  const getApi = async () => {
+    const networkUrl =
+      network === 'kusama'
+        ? 'wss://kusama-rpc.polkadot.io/'
+        : 'wss://cc1-1.polkadot.network';
 
-    getApi();
-    getImage(address, balance, network)
+    const wsProvider = new WsProvider(networkUrl);
+
+    const api = await ApiPromise.create({ provider: wsProvider });
+
+    let {
+      data: { free: previousFree },
+    } = await api.query.system.account(address);
+    setBalance(`${previousFree}`);
+    getImage(address, `${previousFree}`, network)
       .then((r) => {
         const data = r.data;
         setImage(data[Object.keys(data)[0]]);
       })
-      .catch((e) => console.log(e));
-  }, [address]);
+      .catch((e) => console.log('errore', e));
+  };
+
+  useEffect(() => {
+    getApi();
+  });
 
   return (
     <div className="App-header">

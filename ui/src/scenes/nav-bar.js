@@ -18,18 +18,16 @@ import { getImage } from '../utils/polka';
 function NavBar({ myAddress, network, changeNetwork }) {
   const [account, setAccount] = useState('');
   const [open, setOpen] = useState(false);
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState('');
 
   const getAndSetImage = async () => {
     const image = await getImage(myAddress, 0, network);
-    setImage(
-      image.data[myAddress]
-    )
-  }
+    setImage(image.data[myAddress]);
+  };
 
   useEffect(() => {
-    getAndSetImage()
-  }, []);
+    getAndSetImage();
+  });
 
   const handleChange = (e) => setAccount(e.target.value);
   const truncate = (str) => {
@@ -44,39 +42,59 @@ function NavBar({ myAddress, network, changeNetwork }) {
           justify="flex-start"
           alignItems="center"
         >
-          <Grid item item>
+          <Grid item>
             <Button
               style={{ fontWeight: 'bold' }}
               onClick={() => setOpen(!open)}
             >
-              👾 Start
+              <span role="img" aria-label="start">
+                👾 Start
+              </span>
             </Button>
             {open && (
               <List horizontalAlign="left" verticalAlign="bottom">
                 <Link to={`/`} style={{ textDecoration: 'none' }}>
-                  <ListItem onClick={() => setOpen(!open)}>👨‍💻 Home</ListItem>
+                  <ListItem onClick={() => setOpen(!open)}>
+                    <span role="img" aria-label="home">
+                      {' '}
+                      👨‍💻 Home
+                    </span>
+                  </ListItem>
                 </Link>
 
                 <Link to={`wallet`} style={{ textDecoration: 'none' }}>
                   <ListItem onClick={() => setOpen(!open)}>
-                    📁 My wallet
+                    <span role="img" aria-label="wallet">
+                      {' '}
+                      📁 My wallet
+                    </span>
                   </ListItem>
                 </Link>
                 <Link to={`/`} style={{ textDecoration: 'none' }}>
                   <ListItem onClick={() => changeNetwork(null)}>
-                    🌐 Change Network
+                    <span role="img" aria-label="change-newtork">
+                      🌐 Change Network
+                    </span>
                   </ListItem>
                 </Link>
 
                 <Link to={`validators`} style={{ textDecoration: 'none' }}>
                   <ListItem onClick={() => setOpen(!open)}>
-                    💂‍♂️ Validators
+                    <span role="img" aria-label="validators">
+                      {' '}
+                      💂‍♂️ Validators
+                    </span>
                   </ListItem>
                 </Link>
 
                 <Divider />
 
-                <ListItem disabled>🔙 Logout</ListItem>
+                <ListItem disabled>
+                  <span role="img" aria-label="logout">
+                    {' '}
+                    🔙 Logout{' '}
+                  </span>
+                </ListItem>
               </List>
             )}
           </Grid>
@@ -91,8 +109,12 @@ function NavBar({ myAddress, network, changeNetwork }) {
           </Grid>
           <Grid item>
             <Link to={`account/${account}`}>
-              <Button square>🔍</Button>
-            </Link>{' '}
+              <Button square>
+                <span role="img" aria-label="search">
+                  🔍
+                </span>
+              </Button>
+            </Link>
           </Grid>
         </Grid>
         {image ? (
@@ -102,7 +124,11 @@ function NavBar({ myAddress, network, changeNetwork }) {
             </Link>
             <Link style={{ textDecoration: 'none' }} to={`wallet`}>
               <Avatar style={{ width: '36px', height: '36px' }}>
-                <img style={{ width: '36px' }} src={`data:image/jpeg;base64,${image}`} />{' '}
+                <img
+                  alt="anime"
+                  style={{ width: '36px' }}
+                  src={`data:image/jpeg;base64,${image}`}
+                />{' '}
               </Avatar>
             </Link>
           </>

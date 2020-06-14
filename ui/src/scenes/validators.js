@@ -3,40 +3,47 @@ import '../App.css';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import ValidatorCard from '../components/ValidatorCard';
 import { getImage } from '../utils/polka';
-
-function AccountPage({ validators, network }) {
+function ValidatorPage({ network }) {
   const [account, setAccount] = useState(null);
 
-  useEffect(async () => {
-    const provider = new WsProvider(network === "kusama" ? 'wss://cc3-5.kusama.network/' : 'wss://cc1-1.polkadot.network');
-    const api = await ApiPromise.create({ provider: provider });
+  const getAndSetValidator = async () => {
+    const networkUrl =
+      network === 'kusama'
+        ? 'wss://kusama-rpc.polkadot.io/'
+        : 'wss://cc1-1.polkadot.network';
 
-    console.log(api.derive);
+    const wsProvider = new WsProvider(networkUrl);
 
+    const api = await ApiPromise.create({ provider: wsProvider });
     api.derive.chain.subscribeNewHeads(async (header) => {
       const account = {
         address: `${header.author}`,
       };
       const details = await api.query.system.account(account.address);
       account.balance = `${details.data.free}`;
-
       const image = await getImage(account.address, account.balance, network);
       account.image = image.data[account.address];
-
       setAccount(account);
     });
-  }, []);
+  };
+
+  useEffect(() => {
+    getAndSetValidator();
+  });
 
   return (
     <React.Fragment>
       <div className="App-header">
+        <br />
+
         <img
-          src="http://i.picasion.com/gl/90/cQ2e.gif"
-          width="479"
-          height="64"
+          src="http://i.picasion.com/gl/90/cRJs.gif"
+          width="509"
+          height="60"
           border="0"
-          alt="http://picasion.com/gl/cQ2e/"
+          alt="logo"
         />
+        <br />
         <span>
           <ValidatorCard
             address={account && account.address}
@@ -49,4 +56,4 @@ function AccountPage({ validators, network }) {
   );
 }
 
-export default AccountPage;
+export default ValidatorPage;

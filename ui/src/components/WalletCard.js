@@ -7,7 +7,6 @@ import {
   Tabs,
   TabBody,
   Tab,
-  Progress,
   Hourglass,
 } from 'react95';
 import Typography from '@material-ui/core/Typography';
@@ -18,7 +17,11 @@ const AccountCard = ({ image, address, balance }) => {
   return (
     <Window>
       <WindowContent>
-        <WindowHeader>💰 My Wallet 💰 </WindowHeader>
+        <WindowHeader>
+          <span role="img" aria-label="wallet">
+            💰 My Wallet 💰{' '}
+          </span>
+        </WindowHeader>
         <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
           <Tab value={0} onClick={() => setActiveTab(0)}>
             Avatar
@@ -32,17 +35,25 @@ const AccountCard = ({ image, address, balance }) => {
           <TabBody>
             <Fieldset>
               {image ? (
-                <img style={{maxHeight: "500px"}} src={`data:image/jpeg;base64,${image}`} />
+                <img
+                  alt="logo"
+                  style={{ maxHeight: '500px' }}
+                  src={`data:image/jpeg;base64,${image}`}
+                />
               ) : (
-                <Progress percent={52} />
+                <Hourglass size={52} />
               )}
               <Typography variant="h5" gutterBottom>
-                🌴 Address 🌴{' '}
+                <span role="img" aria-label="address">
+                  🌴 Address 🌴
+                </span>{' '}
               </Typography>
               <p>{address}</p>
               <br />
               <Typography variant="h5" gutterBottom>
-                💴 Balance 💴{' '}
+                <span role="img" aria-label="balance">
+                  💴 Balance 💴
+                </span>{' '}
               </Typography>
               {balance}
             </Fieldset>

@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
-import { Fieldset, Window, WindowContent } from 'react95';
+import React from 'react';
+import { Fieldset, Window, WindowContent, Hourglass } from 'react95';
 
 const ValidatorCard = ({ image, address, balance }) => {
   return (
     <Window>
       <WindowContent>
         <Fieldset>
-          {image && <img style={{maxHeight: "500px"}} src={`data:image/jpeg;base64,${image}`} />}
+          {image === null ? (
+            <Hourglass size={60}></Hourglass>
+          ) : (
+            <img
+              style={{ maxHeight: '500px' }}
+              src={`data:image/jpeg;base64,${image}`}
+              alt="anime"
+            />
+          )}
           <p>{address}</p>
           <p>{balance}</p>
         </Fieldset>

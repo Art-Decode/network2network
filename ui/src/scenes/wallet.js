@@ -11,7 +11,11 @@ function WalletPage({ address, network }) {
 
   useEffect(() => {
     const getApi = async () => {
-      const provider = new WsProvider(network === "kusama" ? 'wss://cc3-5.kusama.network/' : 'wss://cc1-1.polkadot.network');
+      const provider = new WsProvider(
+        network === 'kusama'
+          ? 'wss://cc3-5.kusama.network/'
+          : 'wss://cc1-1.polkadot.network'
+      );
       const api = await ApiPromise.create({ provider: provider });
       try {
         let {
@@ -30,7 +34,7 @@ function WalletPage({ address, network }) {
         setImage(data[Object.keys(data)[0]]);
       })
       .catch((e) => console.log(e));
-  }, [address]);
+  });
 
   return (
     <div className="App-header">

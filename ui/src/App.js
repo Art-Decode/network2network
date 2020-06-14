@@ -7,15 +7,10 @@ import WalletPage from './scenes/wallet';
 import { Keyring } from '@polkadot/api';
 import NavBar from './scenes/nav-bar';
 import { Router } from '@reach/router';
-import axios from 'axios';
 import { Grid } from '@material-ui/core';
-import { getValidators } from './utils/polka';
-import Typography from '@material-ui/core/Typography';
-import { Link } from '@reach/router';
 import {
   getNetworkAvatarKusama,
   getNetworkAvatarPolkadot,
-  getImage,
 } from './utils/polka';
 import kusamaLogo from './kusamaLogo.png';
 
@@ -30,15 +25,8 @@ const generateRandomString = () => {
   );
 };
 
-var config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
-
 function App() {
   const [myAddress, setMyAddress] = useState(null);
-  const [image, setImage] = useState(null);
   const [network, setNetwork] = useState(null);
   const [kusama, setKusama] = useState(null);
   const [polkadot, setPolkadot] = useState(null);
@@ -54,21 +42,6 @@ function App() {
     const address = `${keyring.getPair(pairAlice.address).address}`;
     setMyAddress(address);
 
-    const getImage = (network) => {
-      axios({
-        method: 'post',
-        url: `/api/${network}`,
-        data: {
-          [address]: 0,
-        },
-        config,
-      })
-        .then((r) => {
-          const data = r.data;
-          setImage(data[Object.keys(data)[0]]);
-        })
-        .catch((e) => console.log(e));
-    };
     getNetworkAvatarKusama()
       .then((r) => {
         const data = r.data;
@@ -82,7 +55,6 @@ function App() {
         setPolkadot(data[Object.keys(data)[0]]);
       })
       .catch((e) => console.log(e));
-    getImage(network);
   }, []);
 
   return (
@@ -96,6 +68,7 @@ function App() {
                 {kusama && (
                   <div>
                     <img
+                      alt="kusama"
                       onClick={() => setNetwork('kusama')}
                       src={`data:image/jpeg;base64,${kusama}`}
                     />
@@ -108,13 +81,14 @@ function App() {
                   <div>
                     {' '}
                     <img
+                      alt="polkadot"
                       onClick={() => setNetwork('polkadot')}
                       src={`data:image/jpeg;base64,${polkadot}`}
                     />
                     <img
                       src={polkadotLogo}
                       style={{ marginTop: '-80px', marginLeft: '-70px' }}
-                      alt="Logo"
+                      alt="kusamaImage"
                     />
                   </div>
                 )}
@@ -130,14 +104,14 @@ function App() {
             myAddress={myAddress}
           ></NavBar>
           <Router>
-            <LandingPage path="/" network={network} />
-            <AccountPage path="account/:address" network={network} />
-            <WalletPage address={myAddress} path="/wallet" network={network} />
-            <ValidatorsPage
-              validators={[]}
-              path="validators"
+            <LandingPage
+              fae={network === 'kusama' ? kusama : polkadot}
+              path="/"
               network={network}
             />
+            <AccountPage path="account/:address" network={network} />
+            <WalletPage address={myAddress} path="/wallet" network={network} />
+            <ValidatorsPage path="validators" network={network} />
           </Router>
         </div>
       )}

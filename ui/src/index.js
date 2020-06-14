@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { reset, themes } from 'react95';
+import { themes } from 'react95';
 import Win from './assets/fonts/Win.ttf';
 import './assets/fonts/Win.ttf';
 const ResetStyles = createGlobalStyle`
