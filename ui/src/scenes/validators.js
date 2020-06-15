@@ -5,17 +5,15 @@ import ValidatorCard from '../components/ValidatorCard';
 import { getImage } from '../utils/polka';
 function ValidatorPage({ network }) {
   const [account, setAccount] = useState(null);
+  const networkUrl =
+    network === 'kusama'
+      ? 'wss://kusama-rpc.polkadot.io/'
+      : 'wss://cc1-1.polkadot.network';
 
+  const wsProvider = new WsProvider(networkUrl);
   const subscribeLastAuthor = async () => {
-    const networkUrl =
-      network === 'kusama'
-        ? 'wss://kusama-rpc.polkadot.io/'
-        : 'wss://cc1-1.polkadot.network';
-
-    const wsProvider = new WsProvider(networkUrl);
-
     const api = await ApiPromise.create({ provider: wsProvider });
-    api.derive.chain.subscribeNewHeads(async (header) => {
+    const sub = await api.derive.chain.subscribeNewHeads(async (header) => {
       const account = {
         address: `${header.author}`,
       };
@@ -29,6 +27,7 @@ function ValidatorPage({ network }) {
 
   useEffect(() => {
     subscribeLastAuthor();
+    return () => wsProvider.disconnect();
   }, []);
 
   return (
