@@ -6,7 +6,7 @@ import { getImage } from '../utils/polka';
 function ValidatorPage({ network }) {
   const [account, setAccount] = useState(null);
 
-  const getAndSetValidator = async () => {
+  const subscribeLastAuthor = async () => {
     const networkUrl =
       network === 'kusama'
         ? 'wss://kusama-rpc.polkadot.io/'
@@ -28,8 +28,8 @@ function ValidatorPage({ network }) {
   };
 
   useEffect(() => {
-    getAndSetValidator();
-  });
+    subscribeLastAuthor();
+  }, []);
 
   return (
     <React.Fragment>

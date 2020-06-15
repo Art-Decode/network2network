@@ -33,7 +33,7 @@ function AccountPage({ address, network }) {
 
   useEffect(() => {
     getApi();
-  });
+  }, []);
 
   return (
     <div className="App-header">

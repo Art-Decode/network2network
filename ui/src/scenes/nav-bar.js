@@ -27,7 +27,7 @@ function NavBar({ myAddress, network, changeNetwork }) {
 
   useEffect(() => {
     getAndSetImage();
-  });
+  }, []);
 
   const handleChange = (e) => setAccount(e.target.value);
   const truncate = (str) => {

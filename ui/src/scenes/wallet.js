@@ -34,7 +34,7 @@ function WalletPage({ address, network }) {
         setImage(data[Object.keys(data)[0]]);
       })
       .catch((e) => console.log(e));
-  });
+  }, []);
 
   return (
     <div className="App-header">

@@ -1,5 +1,6 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import axios from 'axios';
+import { getConfig } from '../config';
 
 var config = {
   headers: {
@@ -10,7 +11,7 @@ var config = {
 export const getImage = (address, balance, network) =>
   axios({
     method: 'post',
-    url: `/api/${network}`,
+    url: `${getConfig()}${network}`,
     data: {
       [address]: balance,
     },
@@ -20,7 +21,7 @@ export const getImage = (address, balance, network) =>
 export const getImageKusama = (address, balance) =>
   axios({
     method: 'post',
-    url: '/api/polkadot',
+    url: 'polkadot',
     data: {
       [address]: balance,
     },
@@ -30,14 +31,14 @@ export const getImageKusama = (address, balance) =>
 export const getNetworkAvatarKusama = () =>
   axios({
     method: 'get',
-    url: '/api/kusama/avatar/2703324',
+    url: `${getConfig()}kusama/avatar/2703324`,
     config,
   });
 
 export const getNetworkAvatarPolkadot = () =>
   axios({
     method: 'get',
-    url: '/api/polkadot/avatar/200000',
+    url: `${getConfig()}polkadot/avatar/200000`,
     config,
   });
 

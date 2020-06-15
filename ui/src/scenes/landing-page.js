@@ -13,6 +13,7 @@ import {
   WindowContent,
 } from 'react95';
 import { Link } from '@reach/router';
+import { getConfig } from '../config';
 
 function LandingPage({ face, network }) {
   const [lastTransfers, setLastTransfers] = useState(null);
@@ -37,10 +38,7 @@ function LandingPage({ face, network }) {
       obj[transfer.from.address] = transfer.from.balance;
       return obj;
     }, {});
-    const imagesResp = await axios.post(
-      `/api/${network}`,
-      reqBody
-    );
+    const imagesResp = await axios.post(`${getConfig()}${network}`, reqBody);
     const imagesData = imagesResp.data;
 
     for (let [address, image] of Object.entries(imagesData)) {
@@ -56,7 +54,7 @@ function LandingPage({ face, network }) {
 
   useEffect(() => {
     getLastTransfert();
-  });
+  }, []);
 
   return (
     <div className="App-header">
