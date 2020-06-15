@@ -61,9 +61,10 @@ On the top bar you can search for an address and visualize it
 The application creates a burner wallet, click on the top right icon or "My Wallet" in the start menu
 ![0](assets/tutorial4.png) 
 
----- NEXT STEPS LATER ON TODAY  -----
-check the asset folder images if you cannot wait
-
+## Last Author
+You can visualize the author of the last block in the Validators section
+ ![0](assets/lastAuthorAnime.gif)
+ ![0](assets/lastAuthorHuman.gif)
 
 # Attributions どうもありがとうございます！
 
