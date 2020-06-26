@@ -1,6 +1,6 @@
 # ️🚅 🗻 ✨ n e t w o r k 2 n e t w o r k ✨ 🗻 🚅
 
-[🅻🅸🆅🅴 🅳🅴🅼🅾](http://34.73.91.75/)
+~~[🅻🅸🆅🅴 🅳🅴🅼🅾](http://34.73.91.75/)~~ We ran out of money to host it ¯\_(ツ)_/¯
 
 Network2network is the block explorer and avatar generator  you've been waiting for, (っ◔◡◔)っ ♥ kusama-san ♥.
 
